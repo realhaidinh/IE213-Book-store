@@ -1,0 +1,1 @@
+exports.getUID = () => Date.now().toString(36)

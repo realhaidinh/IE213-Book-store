@@ -5,11 +5,11 @@ const {
   newCategory,
   getCategory,
   deleteCategory,
-} = require("../controllers/categoryController");
+} = require("../controllers/category");
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
 
-router.route("/admin/genres/addgenre").post(newCategory);
-router.route("/genres").get(getCategory);
-router.route("/movies/:genreID").delete(deleteCategory);
+router.route("/admin/category/new").post(newCategory);
+router.route("/category").get(getCategory);
+router.route("/admin/category/:genreID").delete(deleteCategory);
 
 module.exports = router;
