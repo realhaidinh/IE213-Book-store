@@ -105,7 +105,7 @@ const ProductsList = ({ history }) => {
 
 				<div className="col-12 col-md-10 mt-5">
 					<Fragment>
-						<h1 className="my-5">All Products</h1>
+						<h1 className="my-5">Tất cả sản phẩm</h1>
 
 						{loading ? <Loader /> : (
 							<MDBDataTable

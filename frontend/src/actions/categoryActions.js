@@ -24,8 +24,11 @@ export const newCategory = (formData) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `/api/v1/admin/genres/addgenre`,
+      `http://localhost:4000/api/v1/admin/genres/addgenre`,
       formData,
+      {
+				withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+			  },
       config
     );
     dispatch({
@@ -35,7 +38,7 @@ export const newCategory = (formData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_CATRGORY_FAIL,
-      payload: error.response.data.message,
+      payload: error,
     });
   }
 };
@@ -44,7 +47,9 @@ export const getCategory = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_CATEGORY_REQUEST });
 
-    const { data } = await axios.get("/api/v1/genres");
+    const { data } = await axios.get("http://localhost:4000/api/v1/genres",	{
+      withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+      },);
 
     dispatch({
       type: ALL_CATEGORY_SUCCESS,
@@ -63,7 +68,9 @@ export const dltCategory = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_CATEGORY_REQUEST });
 
-    const { data } = await axios.delete(`/api/v1/movies/${id}`);
+    const { data } = await axios.delete(`http://localhost:4000/api/v1/movies/${id}`,	{
+      withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+      },);
 
     dispatch({
       type: DELETE_CATEGORY_SUCCESS,
@@ -72,7 +79,7 @@ export const dltCategory = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_CATEGORY_FAIL,
-      payload: error.response.data.message,
+      payload: error,
     });
   }
 };

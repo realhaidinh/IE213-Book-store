@@ -42,14 +42,15 @@ const Register = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
+    console.log("đăng kí thanh công")
     const formData = new FormData();
     formData.set("name", name);
     formData.set("email", email);
     formData.set("password", password);
     formData.set("avatar", avatar);
-
+    console.log("Dang ki thanh cong")
     dispatch(register(formData));
+    history.push("/");
   };
 
   const onchange = (e) => {
@@ -73,7 +74,7 @@ const Register = () => {
     <Fragment>
       <MetaData title={"Register User"} />
 
-      <h3 className="title-30 text-center mb-35">Register Your Account</h3>
+      <h3 className="title-30 text-center mb-35">Đăng kí tài khoản</h3>
 
       <form
         className="login-form"
@@ -121,14 +122,14 @@ const Register = () => {
             <label htmlFor="avatar_upload">Avatar</label>
             <div className="d-flex align-items-center">
               <div>
-                <figure className="avatar mr-3 item-rtl">
+                <figure className="border-[50%] w-[60px] h-[60px] overflow-hidden mr-[16px]">
                   <img
                     src={avatarPreview}
                     className="rounded-pill"
                     alt="Avatar Preview"
                     style={{
-                      width: "100px",
-                      height: "100px",
+                      width: "60px",
+                      height: "60px",
                       borderRadius: "50%",
                     }}
                   />
@@ -143,7 +144,7 @@ const Register = () => {
                   onChange={onchange}
                 />
                 <label className="custom-file-label" htmlFor="customFile">
-                  Choose Avatar
+                  Chọn avatar
                 </label>
               </div>
             </div>
@@ -151,14 +152,13 @@ const Register = () => {
           <div className="col-12 mt-5">
             <div className="form-inner">
               <button
-                className="primary--btn login-btn"
+                className="px-[16px] py-[16px] text-[white] hover:opacity-[0.8]"
                 type="submit"
-                style={{ border: "none", background: "none" }}
+                style={{ border: "none", background: "#1976D2" }}
                 // disabled={loading ? true : false}
               >
-                <Link to="" className="primary--btn login-btn">
-                  CREATE AN ACCOUNT
-                </Link>
+                  Tạo tài khoản
+         
               </button>
             </div>
           </div>

@@ -46,7 +46,7 @@ const Login = () => {
         <Fragment>
           <MetaData title={"Login"} />
 
-          <h3 className="title-30 text-center mb-35">Login Your Account</h3>
+          <h3 className="title-30 text-center mb-35">Đăng nhập tài khoản</h3>
           <form className="login-form" onSubmit={submitHandler}>
             <div className="row">
               <div className="col-12">
@@ -63,7 +63,7 @@ const Login = () => {
               </div>
               <div className="col-12">
                 <div className="form-inner hidden-icon">
-                  <label htmlFor="email_password">Passwords</label>
+                  <label htmlFor="email_password">Mật khẩu</label>
                   <input
                     type="password"
                     name="name"
@@ -77,7 +77,7 @@ const Login = () => {
                 <div className="form-inner d-flex justify-content-between">
                   <label></label>
                   <Link to="/password/forgot" className="forget-password">
-                    Forgotten password?
+                    Quên mật khẩu?
                   </Link>
                 </div>
               </div>
@@ -86,14 +86,11 @@ const Login = () => {
                   <button
                     className="primary--btn login-btn"
                     type="submit"
-                    style={{ border: "none", background: "none" }}
+                    style={{ border: "none", background: "#1976D2" }}
                   >
-                    <Link
-                      to=""
-                      className="primary--btn login-btn text-uppercase"
-                    >
-                      login ACCOUNT
-                    </Link>
+                
+                     Đăng nhập tài khoản
+                   
                   </button>
                 </div>
               </div>

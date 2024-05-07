@@ -18,12 +18,12 @@ const Search = ({ history }) => {
       <div class="hero-search-form search-form-style-one">
         <input
           type="text"
-          placeholder="Search Your Products..."
+          placeholder="Tìm kiếm sản phẩm ..."
           class="search-field"
           onChange={(e) => setKeyword(e.target.value)}
         />
         <button type="submit" class="search-submit" onClick={searchHandler}>
-          SEARCH
+          Tìm kiếm
         </button>
       </div>
     </form>

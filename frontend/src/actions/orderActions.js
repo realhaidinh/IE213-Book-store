@@ -32,7 +32,9 @@ export const createOrder = (order) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post("/api/v1/order/new", order, config);
+    const { data } = await axios.post("http://localhost:4000/api/v1/order/new", order,	{
+      withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+      }, config);
 
     dispatch({
       type: CREATE_ORDER_SUCCESS,
@@ -51,7 +53,9 @@ export const myOrders = () => async (dispatch) => {
   try {
     dispatch({ type: MY_ORDERS_REQUEST });
 
-    const { data } = await axios.get("/api/v1/orders/me");
+    const { data } = await axios.get("http://localhost:4000/api/v1/orders/me",	{
+      withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+      },);
 
     dispatch({
       type: MY_ORDERS_SUCCESS,
@@ -70,7 +74,9 @@ export const getOrderDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: ORDER_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/order/${id}`);
+    const { data } = await axios.get(`http://localhost:4000/api/v1/order/${id}`,	{
+      withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+      },);
 
     dispatch({
       type: ORDER_DETAILS_SUCCESS,
@@ -89,7 +95,9 @@ export const allOrders = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_ORDERS_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/admin/orders`);
+    const { data } = await axios.get(`http://localhost:4000/api/v1/admin/orders`,	{
+      withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+      },);
 
     dispatch({
       type: ALL_ORDERS_SUCCESS,
@@ -98,7 +106,7 @@ export const allOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ALL_ORDERS_FAIL,
-      payload: error.response.data.message,
+      payload: "Lỗi",
     });
   }
 };
@@ -115,7 +123,9 @@ export const updateOrder = (id, orderData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `/api/v1/admin/order/${id}`,
+      `http://localhost:4000/api/v1/admin/order/${id}`,	{
+				withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+			  },
       orderData,
       config
     );
@@ -137,7 +147,9 @@ export const deleteOrder = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ORDER_REQUEST });
 
-    const { data } = await axios.delete(`/api/v1/admin/order/${id}`);
+    const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/order/${id}`,	{
+      withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+      },);
 
     dispatch({
       type: DELETE_ORDER_SUCCESS,

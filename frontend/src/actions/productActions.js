@@ -37,17 +37,17 @@ export const getProducts =
 			try {
 				dispatch({ type: ALL_PRODUCTS_REQUEST });
 
-				let link = `/api/v1/products?page=${currentPage}`;
+				let link = `http://localhost:4000/api/v1/products?page=${currentPage}`;
 				if (keyword) {
-					link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&ratings[gte]=${rating}`;
+					link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&ratings[gte]=${rating}`;
 				}
 
 				if (category) {
-					link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`;
+					link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`;
 				}
 
 				const { data } = await axios.get(link);
-
+               console.log(data)
 				dispatch({
 					type: ALL_PRODUCTS_SUCCESS,
 					payload: data,
@@ -71,8 +71,11 @@ export const newProduct = (productData) => async (dispatch) => {
 		};
 
 		const { data } = await axios.post(
-			`/api/v1/admin/product/new`,
+			`http://localhost:4000/api/v1/admin/product/new`,
 			productData,
+			{
+				withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+			  },
 			config
 		);
 		dispatch({
@@ -82,7 +85,7 @@ export const newProduct = (productData) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: NEW_PRODUCT_FAIL,
-			payload: error.response.data.message,
+			payload: error,
 		});
 	}
 };
@@ -92,7 +95,9 @@ export const deleteProduct = (id) => async (dispatch) => {
 	try {
 		dispatch({ type: DELETE_PRODUCT_REQUEST });
 
-		const { data } = await axios.delete(`/api/v1/admin/product/${id}`);
+		const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/product/${id}`,	{
+			withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+		  });
 
 		dispatch({
 			type: DELETE_PRODUCT_SUCCESS,
@@ -101,7 +106,7 @@ export const deleteProduct = (id) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: DELETE_PRODUCT_FAIL,
-			payload: error.response.data.message,
+			payload: error,
 		});
 	}
 };
@@ -118,8 +123,11 @@ export const updateProduct = (id, productData) => async (dispatch) => {
 		};
 
 		const { data } = await axios.put(
-			`/api/v1/admin/product/${id}`,
+			`http://localhost:4000/api/v1/admin/product/${id}`,
 			productData,
+			{
+				withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+			  },
 			config
 		);
 
@@ -130,7 +138,7 @@ export const updateProduct = (id, productData) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: UPDATE_PRODUCT_FAIL,
-			payload: error.response.data.message,
+			payload: error,
 		});
 	}
 };
@@ -139,7 +147,9 @@ export const getProductDetails = (id) => async (dispatch) => {
 	try {
 		dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
-		const { data } = await axios.get(`/api/v1/product/${id}`);
+		const { data } = await axios.get(`http://localhost:4000/api/v1/product/${id}`,	{
+			withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+		  });
 
 		dispatch({
 			type: PRODUCT_DETAILS_SUCCESS,
@@ -148,7 +158,7 @@ export const getProductDetails = (id) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: PRODUCT_DETAILS_FAIL,
-			payload: error.response.data.message,
+			payload: error,
 		});
 	}
 };
@@ -163,7 +173,9 @@ export const newReview = (reviewData) => async (dispatch) => {
 			},
 		};
 
-		const { data } = await axios.put(`/api/v1/review`, reviewData, config);
+		const { data } = await axios.put(`http://localhost:4000/api/v1/review`, reviewData, 	{
+			withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+		  },config);
 
 		dispatch({
 			type: NEW_REVIEW_SUCCESS,
@@ -172,7 +184,7 @@ export const newReview = (reviewData) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: NEW_REVIEW_FAIL,
-			payload: error.response.data.message,
+			payload: error,
 		});
 	}
 };
@@ -181,7 +193,9 @@ export const getAdminProducts = () => async (dispatch) => {
 	try {
 		dispatch({ type: ADMIN_PRODUCTS_REQUEST });
 
-		const { data } = await axios.get(`/api/v1/admin/products`);
+		const { data } = await axios.get(`http://localhost:4000/api/v1/admin/products`,	{
+			withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+		  },);
 
 		dispatch({
 			type: ADMIN_PRODUCTS_SUCCESS,
@@ -190,7 +204,7 @@ export const getAdminProducts = () => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: ADMIN_PRODUCTS_FAIL,
-			payload: error.response.data.message,
+			payload: error,
 		});
 	}
 };
@@ -200,7 +214,9 @@ export const getProductReviews = (id) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_REVIEWS_REQUEST });
 
-		const { data } = await axios.get(`/api/v1/reviews?id=${id}`);
+		const { data } = await axios.get(`http://localhost:4000/api/v1/reviews?id=${id}`,	{
+			withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+		  },);
 
 		dispatch({
 			type: GET_REVIEWS_SUCCESS,
@@ -209,7 +225,7 @@ export const getProductReviews = (id) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: GET_REVIEWS_FAIL,
-			payload: error.response.data.message,
+			payload: error,
 		});
 	}
 };
@@ -220,7 +236,9 @@ export const deleteReview = (id, productId) => async (dispatch) => {
 		dispatch({ type: DELETE_REVIEW_REQUEST });
 
 		const { data } = await axios.delete(
-			`/api/v1/reviews?id=${id}&productId=${productId}`
+			`http://localhost:4000/api/v1/reviews?id=${id}&productId=${productId}`,	{
+				withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+			  },
 		);
 
 		dispatch({
@@ -232,7 +250,7 @@ export const deleteReview = (id, productId) => async (dispatch) => {
 
 		dispatch({
 			type: DELETE_REVIEW_FAIL,
-			payload: error.response.data.message,
+			payload: error,
 		});
 	}
 };

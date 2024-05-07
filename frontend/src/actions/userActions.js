@@ -50,7 +50,11 @@ export const login = (email, password) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('http://localhost:4000/api/v1/login', { email, password }, config)
+        const {data}= await axios.post('http://127.0.0.1:4000/api/v1/login', { email, password }, {
+            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+          },config)
+          console.log(data.token)
+        document.cookie=data.token;
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -60,7 +64,7 @@ export const login = (email, password) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
-            payload: error.response.data.message
+            payload: error
         })
     }
 }
@@ -76,8 +80,8 @@ export const register = (userData) => async (dispatch) => {
                 'Content-Type': 'multipart/form-data'
             }
         }
-
-        const { data } = await axios.post('http://localhost:3000/api/v1/register', userData, config)
+        console.log("Gửi yêu cầu thành công")
+        const { data } = await axios.post('http://localhost:4000/api/v1/register', userData, config)
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
@@ -87,7 +91,7 @@ export const register = (userData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: REGISTER_USER_FAIL,
-            payload: error.response.data.message
+            payload: error
         })
     }
 }
@@ -96,9 +100,11 @@ export const register = (userData) => async (dispatch) => {
 export const loadUser = () => async (dispatch) => {
     try {
 
-        dispatch({ type: LOAD_USER_REQUEST })
-
-        const { data } = await axios.get('http://localhost:3000/api/v1/me')
+        //dispatch({ type: LOAD_USER_REQUEST })
+        
+        const { data } = await axios.get('http://localhost:4000/api/v1/me',{
+            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+          })
 
         dispatch({
             type: LOAD_USER_SUCCESS,
@@ -108,7 +114,7 @@ export const loadUser = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOAD_USER_FAIL,
-            payload: error.response.data.message
+            payload:error
         })
     }
 }
@@ -125,7 +131,9 @@ export const updateProfile = (userData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put('http://localhost:3000/api/v1/me/update', userData, config)
+        const { data } = await axios.put('http://localhost:4000/api/v1/me/update', userData,{
+            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+          } ,config)
 
         dispatch({
             type: UPDATE_PROFILE_SUCCESS,
@@ -135,7 +143,7 @@ export const updateProfile = (userData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_PROFILE_FAIL,
-            payload: error.response.data.message
+            payload: error
         })
     }
 }
@@ -152,7 +160,9 @@ export const updatePassword = (passwords) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put('http://localhost:3000/api/v1/password/update', passwords, config)
+        const { data } = await axios.put('http://localhost:4000/api/v1/password/update', passwords,{
+            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+          }, config)
 
         dispatch({
             type: UPDATE_PASSWORD_SUCCESS,
@@ -162,7 +172,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_PASSWORD_FAIL,
-            payload: error.response.data.message
+            payload: error
         })
     }
 }
@@ -179,7 +189,7 @@ export const forgotPassword = (email) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('http://localhost:3000/api/v1/password/forgot', email, config)
+        const { data } = await axios.post('http://localhost:4000/api/v1/password/forgot', email, config)
 
         dispatch({
             type: FORGOT_PASSWORD_SUCCESS,
@@ -189,7 +199,7 @@ export const forgotPassword = (email) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: FORGOT_PASSWORD_FAIL,
-            payload: error.response.data.message
+            payload: error
         })
     }
 }
@@ -206,7 +216,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put(`http://localhost:3000/api/v1/password/reset/${token}`, passwords, config)
+        const { data } = await axios.put(`http://localhost:4000/api/v1/password/reset/${token}`, passwords, config)
 
         dispatch({
             type: NEW_PASSWORD_SUCCESS,
@@ -216,7 +226,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: NEW_PASSWORD_FAIL,
-            payload: error.response.data.message
+            payload: error
         })
     }
 }
@@ -225,7 +235,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
     try {
 
-        await axios.get('http://localhost:3000/api/v1/logout')
+        await axios.get('http://localhost:4000/api/v1/logout')
 
         dispatch({
             type: LOGOUT_SUCCESS,
@@ -234,7 +244,7 @@ export const logout = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOGOUT_FAIL,
-            payload: error.response.data.message
+            payload: error
         })
     }
 }
@@ -245,7 +255,9 @@ export const allUsers = () => async (dispatch) => {
 
         dispatch({ type: ALL_USERS_REQUEST })
 
-        const { data } = await axios.get('http://localhost:3000/api/v1/admin/users')
+        const { data } = await axios.get('http://localhost:4000/api/v1/admin/users',	{
+            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+          })
 
         dispatch({
             type: ALL_USERS_SUCCESS,
@@ -255,7 +267,7 @@ export const allUsers = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: ALL_USERS_FAIL,
-            payload: error.response.data.message
+            payload: error
         })
     }
 }
@@ -272,7 +284,9 @@ export const updateUser = (id, userData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put(`http://localhost:3000/api/v1/admin/user/${id}`, userData, config)
+        const { data } = await axios.put(`http://localhost:4000/api/v1/admin/user/${id}`, userData,	{
+            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+          }, config)
 
         dispatch({
             type: UPDATE_USER_SUCCESS,
@@ -282,7 +296,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_USER_FAIL,
-            payload: error.response.data.message
+            payload: error
         })
     }
 }
@@ -294,7 +308,9 @@ export const getUserDetails = (id) => async (dispatch) => {
         dispatch({ type: USER_DETAILS_REQUEST })
 
 
-        const { data } = await axios.get(`http://localhost:3000/api/v1/admin/user/${id}`)
+        const { data } = await axios.get(`http://localhost:4000/api/v1/admin/user/${id}`,	{
+            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+          },)
 
         dispatch({
             type: USER_DETAILS_SUCCESS,
@@ -304,7 +320,7 @@ export const getUserDetails = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: USER_DETAILS_FAIL,
-            payload: error.response.data.message
+            payload: error
         })
     }
 }
@@ -315,7 +331,9 @@ export const deleteUser = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_USER_REQUEST })
 
-        const { data } = await axios.delete(`http://localhost:3000/api/v1/admin/user/${id}`)
+        const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/user/${id}`,	{
+            withCredentials: true // Cấu hình Axios để bao gồm cookie trong yêu cầu
+          },)
 
         dispatch({
             type: DELETE_USER_SUCCESS,
@@ -325,7 +343,7 @@ export const deleteUser = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: DELETE_USER_FAIL,
-            payload: error.response.data.message
+            payload: error
         })
     }
 }

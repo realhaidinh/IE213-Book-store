@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import {useState} from "react"
 const Sidebar = () => {
+    const [expand,setExpand]=useState({product:false,category:false})
+	const toggleButton=(e)=>{
+		if(e.target.className=="productSubmenu")
+		setExpand({...expand,product:!expand.product})
+	    else setExpand({...expand,category:!expand.category})
+	}
 	return (
 		<div className="sidebar-wrapper">
 			<nav id="sidebar">
@@ -15,13 +21,13 @@ const Sidebar = () => {
 					<li>
 						<a
 							href="#productSubmenu"
-							data-toggle="collapse"
-							aria-expanded="false"
-							className="dropdown-toggle"
+							className="productSubmenu"
+							onClick={toggleButton}
 						>
 							<i className="fa fa-product-hunt"></i> Products
 						</a>
-						<ul className="collapse list-unstyled" id="productSubmenu">
+						{expand.product &&
+						<ul className="" >
 							<li>
 								<Link to="/admin/products">
 									<i className="fa fa-clipboard"></i> All
@@ -33,18 +39,18 @@ const Sidebar = () => {
 									<i className="fa fa-plus"></i> Create
 								</Link>
 							</li>
-						</ul>
+						</ul>}
 					</li>
 					<li>
 						<a
 							href="#categorySubmenu"
-							data-toggle="collapse"
-							aria-expanded="false"
-							className="dropdown-toggle"
+							className="categorySubmenu"
+							onClick={toggleButton}
 						>
 							<i className="fa fa-product-hunt"></i> Category
 						</a>
-						<ul className="collapse list-unstyled" id="categorySubmenu">
+						{expand.category &&
+						<ul className="" id="categorySubmenu">
 							<li>
 								<Link to="/admin/category">
 									<i className="fa fa-clipboard"></i> All
@@ -56,7 +62,7 @@ const Sidebar = () => {
 									<i className="fa fa-plus"></i> Create
 								</Link>
 							</li>
-						</ul>
+						</ul>}
 					</li>
 
 					<li>

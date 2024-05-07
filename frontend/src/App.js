@@ -40,28 +40,16 @@ import CategorysList from "./components/admin/CatagoryList";
 
 import ProtectedRoute from "./components/route/ProtectedRoute";
 import { loadUser } from "./actions/userActions";
-import store from "./store";
+import {store} from "./store";
 import axios from "axios";
 
 // Payment
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import UserPage from "./components/user/UserPage";
 import Contact from "./components/Contact";
 
 function App() {
-  const [stripeApiKey, setStripeApiKey] = useState("");
-
   useEffect(() => {
     store.dispatch(loadUser());
-
-    async function getStripApiKey() {
-      const { data } = await axios.get("/api/v1/stripeapi");
-
-      setStripeApiKey(data.stripeApiKey);
-    }
-
-    getStripApiKey();
   }, []);
 
   return (
@@ -78,11 +66,14 @@ function App() {
           <ProtectedRoute path="/shipping" component={Shipping} />
           <ProtectedRoute path="/confirm" component={ConfirmOrder} exact />
           <ProtectedRoute path="/success" component={OrderSuccess} />
-          {stripeApiKey && (
-            <Elements stripe={loadStripe(stripeApiKey)}>
-              <ProtectedRoute path="/payment" component={Payment} />
-            </Elements>
-          )}
+
+          {/* Tao cac route test ====*/}
+          <Route path='/test' component={Dashboard}/> 
+          <Route path="/test/products" component={ProductsList}></Route>
+          <Route path="/test2" component={Shipping} />
+          <Route path="/test3" component={ConfirmOrder} exact />
+
+          {/* ========================= */}
 
           <Route path="/login" component={UserPage} />
           {/* <Route path="/register" component={Register} /> */}
